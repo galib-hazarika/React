@@ -1,15 +1,52 @@
 import React from "react";
 import Skill from "./Skill.js";
 // import "./style.css";
-
+const skills = [
+  {
+    skill: "HTML+CSS",
+    level: "advanced",
+    color: "#2662EA",
+  },
+  {
+    skill: "JavaScript",
+    level: "advanced",
+    color: "#EFD81D",
+  },
+  {
+    skill: "Web Design",
+    level: "advanced",
+    color: "#C3DCAF",
+  },
+  {
+    skill: "Git and GitHub",
+    level: "intermediate",
+    color: "#E84F33",
+  },
+  {
+    skill: "React",
+    level: "advanced",
+    color: "#60DAFB",
+  },
+  {
+    skill: "Svelte",
+    level: "beginner",
+    color: "#FF3B00",
+  },
+];
 function SkillList() {
   return (
     <div className='skill-list'>
-      <Skill skill='React' emoji='🤙' color='blue' />
-      <Skill skill='JavaScript' emoji='🎗🎗' color='yellow' />
-      <Skill skill='Web Design' emoji='🎲' color='green' />
-      <Skill skill='Git and Github' emoji='🔔' color='brown' />
-      <Skill skill='Sevelete' emoji='🎶' color='orangered' />
+      {skills.map(
+        (skill) => (
+          <Skill
+            skill={skill.skill}
+            level={skill.level}
+            color={skill.color}
+            key={skill.skill}
+          />
+        )
+        //console.log(skill);
+      )}
     </div>
   );
 }
