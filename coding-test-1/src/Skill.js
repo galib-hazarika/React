@@ -1,10 +1,12 @@
 import React from "react";
-
-function Skill(props) {
+import "./style.css";
+function Skill({ skill, level, color }) {
   return (
-    <div className='skill' style={{ backgroundColor: props.color }}>
-      <span>{props.skill}</span>
-      <span>{props.emoji}</span>
+    <div className='skill' style={{ backgroundColor: color }}>
+      <span>{skill}</span>
+      <span>
+        {level === "advanced" ? "💪" : level === "intermediate" ? "👍" : "👶"}
+      </span>
     </div>
   );
 }
