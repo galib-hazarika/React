@@ -67,39 +67,83 @@ function Header() {
   );
 }
 function Menu() {
+  const pizza_data = pizzaData;
+  const no_of_pizza = pizza_data.length;
   return (
     <main className='menu'>
       <h2>Our Menu</h2>
       {/* Sending props to child componenet */}
-      <Pizza />
+
+      {no_of_pizza > 0 ? (
+        //React fragment needed when have to display two element as separate without having a parent element
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from. All
+            from our store oven , all organic , all delicious
+          </p>
+          <ul className='pizzas'>
+            {pizzaData.map((pizza) => (
+              <Pizza pizzaobj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>There's nothing to serve at this time come back later :)</p>
+      )}
     </main>
   );
 }
 //Reciving props from parent componenet
 function Pizza(props) {
   return (
-    <div className='pizza'>
+    <li className={`pizza ${props.pizzaobj.soldOut ? "sold-out" : ""}`}>
+      <img src={props.pizzaobj.photoName} alt={props.pizzaobj.name} />
       <div>
-        <h3>Pizza</h3>
-        <p></p>
-        <span></span>
+        <h3>{props.pizzaobj.name}</h3>
+        <p>{props.pizzaobj.ingredients}</p>
+        <span>
+          {props.pizzaobj.soldOut ? "SOLD OUT" : props.pizzaobj.price}
+        </span>
       </div>
-    </div>
+    </li>
   );
 }
+
 function Footer() {
   const hour = new Date().getHours();
   const openHour = 12;
   const closeHour = 22;
-  const isopen = hour >= openHour && hour <= closeHour;
+  const isopen = hour >= openHour && hour <= closeHour - 1;
 
   return (
     <footer className='footer'>
-      {new Date().toLocaleTimeString()} We're currently open
+      {isopen ? (
+        <Open closeHour={closeHour} />
+      ) : (
+        <Close openHour={openHour} closeHour={closeHour} />
+      )}
     </footer>
   );
 }
-
+//Destrucring props
+function Close({ openHour, closeHour }) {
+  return (
+    <div className='order'>
+      <p>
+        We're happy to welcome you between {openHour}:00 and
+        {closeHour}:00
+      </p>
+    </div>
+  );
+}
+function Open({ closeHour }) {
+  return (
+    <div className='order'>
+      <p>We're open until {closeHour}:00 .Come visit us or order online</p>
+      <button className='btn'>Order</button>
+    </div>
+  );
+}
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
